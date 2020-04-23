@@ -9,18 +9,44 @@ var budgetController = (function() {
 
 //UI CONTROLLER
 var UIController = (function() {
-     
-    //Some Code
 
+    // created another object to store the string classes, since easy to modify centrally time and again
+    var DOMstrings = {
+        inputType: '.add__type',
+        inputDescription: '.add__description',
+        inputValue: '.add__value',
+
+        inputBtn: '.add__btn'
+    };
+
+    return{
+        getInput: function() {
+            return{
+                type: document.querySelector(DOMstrings.inputType).value,
+                description: document.querySelector(DOMstrings.inputDescription).value,
+                value: document.querySelector(DOMstrings.inputValue).value
+            };
+        },
+
+        //exposing the DOMstrings to public so csn be used globally
+        getDOMstrings: function() {
+            return DOMstrings;
+        }
+    };
+     
 })();
 
 // GLOBAL APP CONTROLLER
 var controller = (function(budgetCtrl, UICtrl) {
 
+    var DOM =UICtrl.getDOMstrings();
+
 
     var ctrlAddItem = function()  {
   
         // 1. Get the field input  data
+        var input =UICtrl.getInput();
+        console.log(input);
 
         // 2. Add the item to the budget controller
 
@@ -30,16 +56,17 @@ var controller = (function(budgetCtrl, UICtrl) {
 
         // 5. Display the budget on the UI
 
-        console.log('hello');
+        
     }
 
     // On pressing the tick/add button
-    document.querySelector('.add__btn').addEventListener('click', ctrlAddItem);
+    document.querySelector(DOM.inputBtn).addEventListener('click', ctrlAddItem);
 
 
     // On pressing Enter key
     document.addEventListener('keypress', function(event) {
 
+        //13 is the keycode for enter key
         if(event.keyCode ===13  || event.which ===13) {
             
             ctrlAddItem();
