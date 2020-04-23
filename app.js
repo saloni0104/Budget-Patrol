@@ -200,10 +200,10 @@ var controller = (function (budgetCtrl, UICtrl) {
         // 1. Get the field input  data
         input = UICtrl.getInput();
 
-
+        //Checking if description box is empty or not
         if (input.description !== "" && !isNaN(input.value) && input.value > 0) {
 
-            
+
             // 2. Add the item to the budget controller
             newItem = budgetCtrl.addItem(input.type, input.description, input.value);
 
