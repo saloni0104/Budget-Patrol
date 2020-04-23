@@ -1,5 +1,5 @@
 
-//BUDGET CONTROLLER
+//I. BUDGET CONTROLLER
 var budgetController = (function () {
 
     var Expense = function (id, description, value) {
@@ -70,7 +70,7 @@ var budgetController = (function () {
 })();
 
 
-//UI CONTROLLER
+//II. UI CONTROLLER
 var UIController = (function () {
 
     // created another object to store the string classes, since easy to modify centrally time and again
@@ -94,10 +94,12 @@ var UIController = (function () {
             };
         },
 
+        // Now adding it to controller function (point 1)
 
+        //ADDING INCOME AND EXPENSE TO UI
 
         addListItem: function (obj, type) {
-            var html, newHtml,element;
+            var html, newHtml, element;
 
             //Creating HTML strings with placeholder text
 
@@ -119,9 +121,32 @@ var UIController = (function () {
 
             //Insert the HTML to the DOM
 
-            document.querySelector(element).insertAdjacentHTML('beforeend',newHtml);
+            document.querySelector(element).insertAdjacentHTML('beforeend', newHtml);
 
-            // Now call the method i.e point 3 in ctrlAddItem
+            // Now call the method i.e add it to controller function (point 3)
+        },
+
+        // ***Clearing fields after selecting an item***
+
+        clearFields: function () {
+
+            var fields, fieldsArr;
+
+            fields = document.querySelectorAll(DOMstrings.inputDescription
+                + ',' + DOMstrings.inputValue);
+
+                // Converting list to array
+                fieldsArr = Array.prototype.slice.call(fields);
+
+                fieldsArr.forEach(function(current, index, array) {
+                    current.value = "";
+                });
+
+                //Putting focus back to description field after clearing
+                fieldsArr[0].focus();
+                
+                //Now add tot the controller function (point 4)
+
         },
 
         //exposing the DOMstrings to public so can be used globally
@@ -132,7 +157,7 @@ var UIController = (function () {
 
 })();
 
-// GLOBAL APP CONTROLLER
+// III. GLOBAL APP CONTROLLER
 var controller = (function (budgetCtrl, UICtrl) {
 
     var setupEventListeners = function () {
@@ -156,6 +181,7 @@ var controller = (function (budgetCtrl, UICtrl) {
 
 
 
+    // MAIN FUNCTIONALITY OVERALL
 
     var ctrlAddItem = function () {
         var input, newItem
@@ -169,6 +195,9 @@ var controller = (function (budgetCtrl, UICtrl) {
 
         // 3. Add the item to the UI
         UICtrl.addListItem(newItem, input.type);
+
+        //4. Clearing the fields
+        UICtrl.clearFields();
 
         // 4. Calculate the budget
 
@@ -184,10 +213,6 @@ var controller = (function (budgetCtrl, UICtrl) {
             setupEventListeners();
         }
     };
-
-
-
-
 
 
 })(budgetController, UIController);
