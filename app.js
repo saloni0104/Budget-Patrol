@@ -375,7 +375,6 @@ var UIController = (function () {
 
         },
 
-
         //exposing the DOMstrings to public so can be used globally
         getDOMstrings: function () {
             return DOMstrings;
