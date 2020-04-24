@@ -79,6 +79,27 @@ var budgetController = (function () {
             //Now add it to the controller function(point 2)
         },
 
+        deleteItem: function(type, id) {
+            var ids, index;
+
+            // id =6
+            // data.allItems[type][id];   --> Cannot use this because ID's not in order
+            // Therfore, we will create another array with the existing ID's and find out the index of the input ID thus delete it
+            // ids= [1 2 4 6 8]    hence index=3
+
+            ids = data.allItems[type].map(function(current) {
+
+                return current.id;
+
+            });
+
+            index = ids.indexOf(id);
+
+            if(index !== -1) {
+                data.allItems[type].splice(index, 1);
+            }
+        },
+
 
         calculatingBudget: function () {
 
@@ -301,10 +322,11 @@ var controller = (function (budgetCtrl, UICtrl) {
             //inc-1
             splitID = itemID.split('-');
             type = splitID[0];
-            ID = splitID[1];
+            ID = parseInt(splitID[1]);
 
 
             // 1. delete the item from the data structure
+            budgetCtrl.deleteItem(type, ID);
 
             // 2. delete the item form the UI
 
