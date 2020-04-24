@@ -196,6 +196,15 @@ var UIController = (function () {
             // Now call the method i.e add it to controller function (point 3)
         },
 
+        deleteListItem: function(selectorID) {
+
+            var el = document.getElementById(selectorID);
+            el.parentNode.removeChild(el);
+
+        },
+
+        // Now call it in the controller function deleteitem
+
         // ***Clearing fields after selecting an item***
 
         clearFields: function () {
@@ -329,8 +338,10 @@ var controller = (function (budgetCtrl, UICtrl) {
             budgetCtrl.deleteItem(type, ID);
 
             // 2. delete the item form the UI
+            UICtrl.deleteListItem(itemID);
 
             // 3. Update and show the new budget
+            updateBudget();
         }
     };
 
